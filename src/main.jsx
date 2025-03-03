@@ -1,40 +1,52 @@
-import { StrictMode } from 'react'
+import { StrictMode, Suspense, lazy } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import PageNotFound from './components/PageNotFound.jsx'
-import ProductDetails from './components/ProductDetails.jsx'
-import Cart from './components/Cart.jsx'
-import ProductList from './components/ProductList.jsx'
-import Home from './components/Home.jsx'
-import CheckOut from './components/CheckoutOut.jsx'
+
+//LazyLoading
+const PageNotFound = lazy(() => import('./components/PageNotFound.jsx'))
+const ProductDetails = lazy(() => import('./components/ProductDetails.jsx'))
+const Cart = lazy(() => import('./components/Cart.jsx'))
+const ProductList = lazy(() => import('./components/ProductList.jsx'))
+const Home = lazy(() => import('./components/Home.jsx'))
+const CheckOut = lazy(() => import('./components/CheckoutOut.jsx'))
 
 const appRouter = createBrowserRouter([
   {
     path:"/",
-    element: <App/>,
-    errorElement: <PageNotFound/>,
+    element:<App/>,
+    errorElement: <Suspense fallback={<div >Loading...</div>}><PageNotFound/></Suspense> ,
     children: [
       {
         path: "/",
-        element: <Home/>
+        element: (
+          <Suspense fallback={<div>Loading...</div>}><Home/></Suspense>
+        )
 
       },
       {
         path: "/productlist",
-        element:<ProductList/>
+        element: (
+          <Suspense fallback={<div>Loading...</div>}><ProductList/></Suspense>
+        )
       },
       {
         path: "/productdetails/:id",
-        element: <ProductDetails/>
+        element: (
+          <Suspense fallback={<div>Loading...</div>}><ProductDetails/></Suspense>
+        ) 
       },
       {
         path: "/cart",
-        element:<Cart/>
+        element: (
+          <Suspense fallback={<div>Loading...</div>}><Cart/></Suspense>
+        ) 
       },
       {
         path: "/checkout/:id",
-        element: <CheckOut/>
+        element: (
+          <Suspense fallback={<div>Loading...</div>}><CheckOut/></Suspense>
+        )
       },
       
     ],
