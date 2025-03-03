@@ -1,0 +1,112 @@
+.productDetails {
+  display: flex;
+  margin-top: 10rem;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.productDetails .parentDiv {
+  display: flex;
+  margin-top: 6rem;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  width: 50%;
+  background-color: rgb(169, 127, 127);
+  border-radius: 50px;
+  padding: 1rem;
+}
+
+.productDetails .parentDiv h3 {
+  color: rgb(113, 13, 17);
+}
+
+.productDetails .parentDiv img {
+  box-shadow: 3px 3px 10px black;
+  border-radius: 50%;
+}
+
+.productDetails .parentDiv img:hover {
+  box-shadow: 5px 5px 10px black;
+  border-radius: 50%;
+  background-color: rgb(140, 105, 105);
+}
+
+.parentDiv div {
+  word-spacing: 2px;
+  text-align: center;
+}
+
+.parentDiv div button {
+  border: 2px solid black;
+  border-radius: 2rem;
+  background-color: aquamarine;
+  font-weight: bolder;
+  cursor: pointer;
+  margin: 0.2rem;
+  padding: 0.3rem 1rem;
+}
+
+.parentDiv div button:hover {
+  background-color: rgb(80, 164, 136);
+  color: white;
+  box-shadow: 5px 5px 10px black;
+}
+
+.parentDiv p {
+  font-size: 1.3rem;
+  text-align: left;
+  margin-left: 2rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .productDetails .parentDiv {
+    flex-direction: column;
+    width: 80%;
+  }
+
+  .productDetails {
+    margin-top: 1rem;
+  }
+
+  .parentDiv p {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .productDetails .parentDiv {
+    margin-top: 11rem;
+  }
+
+  .parentDiv p {
+    font-size: 1.8rem;
+  }
+  .parentDiv h3 {
+    font-size: 1.8rem;
+  }
+
+  .parentDiv div button,
+  .parentDiv h4 {
+    font-size: 1.5rem;
+  }
+}
+
+#notFound, #error, #load {
+  color: white;
+}
+
+@media screen and (width: 1024px) and (height: 600px) {
+  .productDetails .parentDiv {
+    margin-top: 6rem;
+  }
+
+  .parentDiv p {
+    font-size: 1.2rem;
+  }
+
+  .parentDiv div button {
+    font-size: 1rem;
+  }
+}

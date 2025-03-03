@@ -1,63 +1,71 @@
-// import {createSlice} from "@reduxjs/toolkit"
-// // import { products } from "../src/components/ProductList"
-
-// // console.log(products)
-
-// const cartSlice = createSlice({
-//     name: "Product",
-//     initialState:{
-//         items: []
-//     },
-//     reducers:{
-//         addProduct:(state, action) => {
-//             console.log(action)
-//             state.items.push(action.payload)
-//         },
-//         removeProduct:(state, action) => {
-//             state.items.pop()
-//         },
-//         clearCart:(state, action) => {
-//             state.items = []
-//         }
-//     }
-// })
-
-// export const {addProduct, removeProduct, clearCart} = cartSlice.actions;
-// export default cartSlice.reducer;
-
-
 import { createSlice } from "@reduxjs/toolkit";
 
-// The products are not imported here but should be if you need them
-// import { products } from "../src/components/ProductList"
-
+//create cart slice
 const cartSlice = createSlice({
-  name: "Product",
+  name: "product", //name of slice
   initialState: {
     items: [],
   },
   reducers: {
-    // Adds product to the cart
+    //add reducer function
     addProduct: (state, action) => {
-      console.log(action);
-      state.items.push(action.payload); // Add the product to the items array
+      // getting index of the items which we want to add in cart
+      const existingProductIndex = state.items.findIndex(
+        (item) => item.id === action.payload.id
+      );
+
+      //if index is not equal to -1 than just increase the previous value
+      if (existingProductIndex !== -1) {
+        state.items[existingProductIndex].quantity += 1;
+      }
+
+      //just add in cart
+      else {
+        state.items.push({
+          ...action.payload,
+          quantity: 1,
+        });
+      }
     },
 
-    // Removes a product from the cart using its ID
     removeProduct: (state, action) => {
-      // Filter the items to remove the product by matching the ID
-      state.items = state.items.filter(item => item.id !== action.payload.id); // Assuming each product has an 'id' field
+      // Find the index of the product to remove
+      const existingProductIndex = state.items.findIndex(
+        (item) => item.id === action.payload
+      );
+
+      if (existingProductIndex !== -1) {
+        state.items.splice(existingProductIndex, 1); // Remove the product from the cart
+      }
     },
 
-    // Clears the entire cart
+    updateProductQuantity: (state, action) => {
+      const { id, quantity } = action.payload;
+
+      // Update quantity for the existing product
+      const existingProductIndex = state.items.findIndex(
+        (item) => item.id === id
+      );
+
+      if (existingProductIndex !== -1) {
+        state.items[existingProductIndex].quantity = quantity;
+      }
+    },
+
+    // Clear the entire cart
     clearCart: (state) => {
-      state.items = []; // Resets the items array to an empty array
+      state.items = [];
     },
   },
 });
 
-// Export the action creators
-export const { addProduct, removeProduct, clearCart } = cartSlice.actions;
+//total no. of items in cart
+export const selectTotalItems = (state) => {
+  return (
+    state.product.items?.reduce((total, item) => total + item.quantity, 0) || 0
+  );
+};
 
-// Export the reducer to be included in the store
+export const { addProduct, removeProduct, updateProductQuantity, clearCart } =
+  cartSlice.actions; //reducer functions
 export default cartSlice.reducer;

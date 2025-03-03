@@ -1,13 +1,13 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import PageNotFound from './components/PageNotFound.jsx'
 import ProductDetails from './components/ProductDetails.jsx'
 import Cart from './components/Cart.jsx'
-import Product from './components/ProductList.jsx'
 import ProductList from './components/ProductList.jsx'
+import Home from './components/Home.jsx'
+import CheckOut from './components/CheckoutOut.jsx'
 
 const appRouter = createBrowserRouter([
   {
@@ -17,17 +17,26 @@ const appRouter = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <ProductList/>
+        element: <Home/>
 
       },
       {
-        path: "/productdetails",
+        path: "/productlist",
+        element:<ProductList/>
+      },
+      {
+        path: "/productdetails/:id",
         element: <ProductDetails/>
       },
       {
         path: "/cart",
         element:<Cart/>
-      }
+      },
+      {
+        path: "/checkout/:id",
+        element: <CheckOut/>
+      },
+      
     ],
 
     

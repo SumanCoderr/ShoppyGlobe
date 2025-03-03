@@ -1,39 +1,30 @@
-// import CartItem from "./CartItem";
-// import { useSelector } from "react-redux";
-
-
-// function Cart(){
-
-//     const cartItem = useSelector(store => store.product.items)
-//     console.log(cartItem)
-
-//     return(
-//         <>
-//         <h1>Cart Page</h1>
-//         {cartItem.map(ele => <CartItem key={ele.id} cartItemDetails = {ele}/>)}
-
-
-
-//         </>
-//     )
-// }
-
-// export default Cart;
-
+import React from "react";
 import CartItem from "./CartItem";
+import { useDispatch } from "react-redux";
+import { clearCart } from "../../utils/cartSlice";
+import { selectTotalItems } from "../../utils/cartSlice";
+import { useSelector } from "react-redux";
+import "./Cart.css";
 
 function Cart() {
-    // Destructuring the cartItems from Redux store
+  const dispatch = useDispatch();
+  const totalItemsInCart = useSelector(selectTotalItems); //total items in cart
 
-    // Log to inspect cartItems
+  const handleClearCart = () => {
+    //to clear cart
+    dispatch(clearCart());
+  };
 
-    return (
-        <>
-            <h1>Cart Page</h1>
-            {/* Check if cartItems exists and is an array */}
-                    <CartItem />
-        </>
-    );
+  return (
+    <div className="cart">
+      <div className="cartCard">
+        {totalItemsInCart > 0 ? <CartItem /> : <p>Your cart is empty.</p>}
+      </div>
+      {totalItemsInCart > 0 && (
+        <button onClick={handleClearCart}>Clear Cart</button>
+      )}
+    </div>
+  );
 }
 
 export default Cart;

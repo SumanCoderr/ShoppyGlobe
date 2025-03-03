@@ -1,40 +1,51 @@
-// import useFetch from './useFetch';
+import React, { useState } from "react";
 import useFetch from "../../utils/useFetch";
 import ProductItem from "./ProductItem";
-import  "./productItem.css";
+import "./productItem.css";
 
 const ProductList = () => {
   const { products, loading, error } = useFetch();
+  const [search, setSearch] = useState(""); //search state management
 
   if (loading) {
-    return <div>Loading products...</div>;
+    return <div id="load">Loading products...</div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div id="error">Error: {error}</div>;
   }
 
-  return (
-    <div>
-      <h1>Product List</h1>
-      {/* <ul>
-        {products.map(product => (
-          <li key={product.id}>
-            <p>{product.title}</p>
-            <p>{product.description}</p>
-            <p>Price: ${product.price}</p>
-            <img src={product.image} alt={product.title} width={100} />
-          </li>
-        ))}
-      </ul> */}
-      <div className="productList">
-      {products.map(product => <ProductItem key = {product.id} productDetails = {product}/>)}
-      </div>
+  //filter for search
+  const filteredProducts = products.filter((item) =>
+    item.title.toLowerCase().includes(search.toLowerCase())
+  );
 
+  //search
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  return (
+    <div className="productList">
+      <h1>All Products</h1>
+      <input
+        type="text"
+        value={search}
+        onChange={handleSearch}
+        placeholder="Search Item"
+      />
+
+      <div className="item">
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
+            <ProductItem key={product.id} productDetails={product} />
+          ))
+        ) : (
+          <p id="load">No products found</p>
+        )}
+      </div>
     </div>
   );
 };
-
-export const {products} = ProductList;
 
 export default ProductList;
